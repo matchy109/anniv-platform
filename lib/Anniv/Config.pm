@@ -30,6 +30,9 @@ sub set_default {
     $self->log_dir("$log_dir");
     $self->log_file("$log_file");
 
+    $self->month($mon+1);
+    $self->day($mday);
+
     $self->mail_from("");
     $self->mail_to("");
 

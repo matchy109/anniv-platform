@@ -18,8 +18,6 @@ sub new {
     my $class = shift;
 
     my $conf = Anniv::Config->get_instance();
-    my ( $mday, $month ) = ( localtime(time) )[ 3 .. 4 ];
-    $month += 1;
 
     my $self = {
         base_url        => $conf->{base_url},
@@ -31,11 +29,15 @@ sub new {
         db_name         => $conf->{db_name},
         db_user         => $conf->{db_user},
         db_password     => $conf->{db_password},
-        month           => $month,
-        day             => $mday
+        month           => $conf->{month},
+        day             => $conf->{day}
     };
 
     $self = bless $self, $class;
+
+    $log->info("Set Month : $self->{month}");
+    $log->info("Set Day: $self->{day}");
+
     $self->create_url()->fetch_results()->parse_results()->insert_anniv_data();
 
     return $self;
